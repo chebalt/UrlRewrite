@@ -25,7 +25,7 @@ namespace Hi.UrlRewrite.Analytics
         {
             Assert.IsNotNull(pageEvent, "pageEvent");
 
-            var redirectItem = Sitecore.Data.Database.GetDatabase("master").GetItem(pageEvent.ItemId.ToString());
+            var redirectItem = Sitecore.Data.Database.GetDatabase("web").GetItem(pageEvent.ItemId.ToString());
 
             return redirectItem.Paths.ContentPath;
         }

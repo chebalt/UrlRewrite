@@ -29,7 +29,7 @@ namespace Hi.UrlRewrite.Processing
                     }
 
                     // make sure that the page event has been deployed
-                    DeployEventIfNecessary();
+                    //DeployEventIfNecessary();
                 }
             }
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace Hi.UrlRewrite.Processing
 
         private void DeployEventIfNecessary()
         {
-            var database = Sitecore.Data.Database.GetDatabase("master");
+            var database = Sitecore.Data.Database.GetDatabase("web");
             if (database == null)
             {
                 return;
