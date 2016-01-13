@@ -24,6 +24,7 @@ namespace Hi.UrlRewrite.Processing
 
                     foreach (var db in Factory.GetDatabases().Where(e => e.HasContentItem))
                     {
+                        Log.Info(this, "db = {0}", db.Name);
                         var rulesEngine = new RulesEngine(db);
                         rulesEngine.GetCachedInboundRules();
                     }
@@ -34,7 +35,7 @@ namespace Hi.UrlRewrite.Processing
             }
             catch (Exception ex)
             {
-                Hi.UrlRewrite.Log.Error(this, ex, "Exception during initialization.");
+                Log.Error(this, ex, "Exception during initialization.");
             }
         }
 

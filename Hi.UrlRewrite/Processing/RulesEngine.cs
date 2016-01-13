@@ -6,13 +6,9 @@ using Hi.UrlRewrite.Entities.Rules;
 using Hi.UrlRewrite.Templates.Folders;
 using Hi.UrlRewrite.Templates.Inbound;
 using Hi.UrlRewrite.Templates.Outbound;
-using Hi.UrlRewrite.Templates.Settings;
-using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
-using Sitecore.Publishing;
-using Sitecore.SecurityModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,19 +40,17 @@ namespace Hi.UrlRewrite.Processing
             {
                 return null;
             }
+            var urlRewriteFolderItemId = new ID("{0DA6100D-E4FB-4ADD-AD4C-373F410A1952}");
+            var redirectFolderItem = db.GetItem(urlRewriteFolderItemId); //GetRedirectFolderItems();
 
-            var redirectFolderItems = GetRedirectFolderItems();
-
-            if (redirectFolderItems == null)
+            if (redirectFolderItem == null)
             {
-                return null;
+               return null;
             }
-
+           
             var inboundRules = new List<InboundRule>();
 
-            foreach (var redirectFolderItem in redirectFolderItems)
-            {
-                Log.Debug(this, db, "Loading Inbound Rules from RedirectFolder: {0}", redirectFolderItem.Name);
+                Log.Info(this, db, "Loading Inbound Rules from RedirectFolder: {0}", redirectFolderItem.Name);
 
                 var folderDescendants = redirectFolderItem.Axes.GetDescendants()
                     .Where(x => x.TemplateID == new ID(new Guid(SimpleRedirectItem.TemplateId)) ||
@@ -68,7 +62,7 @@ namespace Hi.UrlRewrite.Processing
                     {
                         var simpleRedirectItem = new SimpleRedirectItem(descendantItem);
 
-                        Log.Debug(this, db, "Loading SimpleRedirect: {0}", simpleRedirectItem.Name);
+                        Log.Info(this, db, "Loading SimpleRedirect: {0}", simpleRedirectItem.Name);
 
                         var inboundRule = CreateInboundRuleFromSimpleRedirectItem(simpleRedirectItem, redirectFolderItem);
 
@@ -81,7 +75,7 @@ namespace Hi.UrlRewrite.Processing
                     {
                         var inboundRuleItem = new InboundRuleItem(descendantItem);
 
-                        Log.Debug(this, db, "Loading InboundRule: {0}", inboundRuleItem.Name);
+                        Log.Info(this, db, "Loading InboundRule: {0}", inboundRuleItem.Name);
 
                         var inboundRule = CreateInboundRuleFromInboundRuleItem(inboundRuleItem, redirectFolderItem);
 
@@ -91,7 +85,6 @@ namespace Hi.UrlRewrite.Processing
                         }
                     }
                 }
-            }
 
             return inboundRules;
         }
@@ -114,7 +107,7 @@ namespace Hi.UrlRewrite.Processing
 
             foreach (var redirectFolderItem in redirectFolderItems)
             {
-                Log.Debug(this, db, "Loading Outbound Rules from RedirectFolder: {0}", redirectFolderItem.Name);
+                Log.Info(this, db, "Loading Outbound Rules from RedirectFolder: {0}", redirectFolderItem.Name);
 
                 var folderDescendants = redirectFolderItem.Axes.GetDescendants()
                     .Where(x => x.TemplateID == new ID(new Guid(OutboundRuleItem.TemplateId)));
@@ -125,7 +118,7 @@ namespace Hi.UrlRewrite.Processing
                     {
                         var outboundRuleItem = new OutboundRuleItem(descendantItem);
 
-                        Log.Debug(this, db, "Loading OutboundRule: {0}", outboundRuleItem.Name);
+                        Log.Info(this, db, "Loading OutboundRule: {0}", outboundRuleItem.Name);
 
                         var outboundRule = CreateOutboundRuleFromOutboundRuleItem(outboundRuleItem, redirectFolderItem);
 
@@ -142,7 +135,9 @@ namespace Hi.UrlRewrite.Processing
 
         private IEnumerable<Item> GetRedirectFolderItems()
         {
+            Log.Info(this, db, "db.GetItem(RedirectFolderItem.TemplateId).GetReferrers(), TemplateId={0}", RedirectFolderItem.TemplateId);
             var redirectFolderItems = db.GetItem(RedirectFolderItem.TemplateId).GetReferrers();
+            Log.Info(this, db, "redirectFolderItems count = {0}", redirectFolderItems.Length.ToString());
             return redirectFolderItems;
         }
 

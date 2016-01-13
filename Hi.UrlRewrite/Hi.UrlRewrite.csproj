@@ -23,6 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,26 +44,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Analytics">
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.Analytics.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics.Aggregation">
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.Analytics.Aggregation.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.Analytics.Aggregation.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics.Core">
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.Analytics.Core.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.Analytics.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics.Model">
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.Analytics.Model.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.Analytics.Model.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ExperienceAnalytics">
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.ExperienceAnalytics.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.ExperienceAnalytics.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\AndysPlayground\Website\bin\Sitecore.Logging.dll</HintPath>
+      <HintPath>F:\Data\Inetpub\CST\src\CST.SC.Web\bin\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

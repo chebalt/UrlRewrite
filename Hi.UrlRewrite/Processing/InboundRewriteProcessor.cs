@@ -17,8 +17,9 @@ namespace Hi.UrlRewrite.Processing
 
         public override void Process(HttpRequestArgs args)
         {
-            var db = Sitecore.Context.Database;
 
+            var db = Sitecore.Data.Database.GetDatabase("web"); // Sitecore.Context.Database;
+            Log.Info(this, db, "InboundRewriteProcessor Process");
             try
             {
 
@@ -33,6 +34,9 @@ namespace Hi.UrlRewrite.Processing
                 }
                 
                 var urlRewriter = new InboundRewriter(httpContext.Request.ServerVariables, httpContext.Request.Headers);
+
+                Log.Info(this, db, "InboundRewriteProcessor Process ProcessUri {0}", requestUri);
+
                 var requestResult = ProcessUri(requestUri, db, urlRewriter);
 
                 if (requestResult == null || !requestResult.MatchedAtLeastOneRule) return;
@@ -49,8 +53,6 @@ namespace Hi.UrlRewrite.Processing
                 {
                     Log.Warn(this, db, "Unable to find UrlRewriter item {0}.", Constants.UrlRewriter_ItemId);
                 }
-
-                return;
             }
             catch (ThreadAbortException)
             {
@@ -66,6 +68,7 @@ namespace Hi.UrlRewrite.Processing
 
         internal ProcessInboundRulesResult ProcessUri(Uri requestUri, Database db, InboundRewriter urlRewriter)
         {
+            Log.Info(this, db, "ProcessUri");
             var inboundRules = GetInboundRules(db);
 
             if (inboundRules == null)
@@ -78,10 +81,24 @@ namespace Hi.UrlRewrite.Processing
 
         private List<InboundRule> GetInboundRules(Database db)
         {
+            Log.Info(this, db, "Start GetInboundRules.");
             var cache = RulesCacheManager.GetCache(db);
             var inboundRules = cache.GetInboundRules();
-
-            if (inboundRules != null) return inboundRules;
+            Log.Info(this, db, "Stop GetInboundRules.");
+            if (inboundRules != null)
+            {
+                Log.Info(this, db, "inboundRules!=null");
+                Log.Info(this, db, "inboundRules.Any()=={0}", inboundRules.Any());
+                if (inboundRules.Any())
+                {
+                    Log.Info(this, db, "inboundRules.Count()=={0}", inboundRules.Count);
+                }
+                return inboundRules;
+            }
+            else
+            {
+                Log.Info(this, db, "inboundRules==null");
+            }
 
             Log.Info(this, db, "Initializing Inbound Rules.");
 
